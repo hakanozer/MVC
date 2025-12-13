@@ -1,31 +1,24 @@
-name: Build ASP.NET MVC 4.8
+name: Build ASP.NET Core MVC
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Build Release
-      run: msbuild MVC.sln /p:Configuration=Release
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        name: mvc-release
-        path: |
-          bin/Release
-          Views
-          Content
-          Scripts
-          App_Data
-          web.config
-          Global.asax
+        dotnet-version: 9.0.x
+
+    - name: Restore
+      run: dotnet restore MVC.sln
+
+    - name: Build
+      run: dotnet build MVC.sln -c Release --no-restore

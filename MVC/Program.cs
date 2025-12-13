@@ -8,12 +8,23 @@ using MVC.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 🔴 BURASI KRİTİK
+var dbPath = Path.Combine(
+    builder.Environment.ContentRootPath,
+    "App_Data",
+    "mvc.db"
+);
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite($"Data Source={dbPath}")
+);
 // DbContext
+/*
 var dbPath = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlite(dbPath);
 });
+*/
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(AppProfile));

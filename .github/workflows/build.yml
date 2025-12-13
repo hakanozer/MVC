@@ -22,3 +22,12 @@ jobs:
 
     - name: Build
       run: dotnet build MVC.sln -c Release --no-restore
+
+    - name: Publish
+      run: dotnet publish MVC.sln -c Release -o publish
+
+    - name: Upload publish artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: publish
+        path: publish

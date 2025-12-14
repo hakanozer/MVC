@@ -8,7 +8,6 @@ using MVC.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔴 BURASI KRİTİK
 var dbPath = Path.Combine(
     builder.Environment.ContentRootPath,
     "App_Data",
